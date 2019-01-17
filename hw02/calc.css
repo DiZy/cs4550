@@ -1,0 +1,11 @@
+tr, td {
+	color: white;
+	background-color: black;
+	margin: 5px;
+	padding: 5px;
+}
+#value, table {
+	border: 1px solid black;
+	width: 93px;
+
+}
