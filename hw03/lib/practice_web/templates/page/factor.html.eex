@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="column">
+    <p><%= link "← go back", to: "/" %></p>
+    <h2>Results</h2>
+
+    <p>Value: <%= @x %></p>
+    <p>Factors: <%= @y %></p>
+    <%= for v  <- @y do %>
+      <p><%= v %></p>
+    <% end %>
+  </div>
+</div>
