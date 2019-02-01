@@ -9,6 +9,20 @@ export default function game_init(root) {
 class Starter extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      cards: this.genCards(),
+      selected: null,
+      secondSelected: null,
+      totalClicks: 0
+    };
+
+    this.allowClicks = true;
+    this.cardClick = this.cardClick.bind(this);
+    this.resetGame = this.resetGame.bind(this);
+  }
+
+  genCards() {
     let cards = ["A", "A", "B", "B", "C", "C", "D", "D", "E", "E", "F", "F", "G", "G", "H", "H"];
     
     // Shuffle cards
@@ -20,15 +34,26 @@ class Starter extends React.Component {
       cards[rand2] = temp;
     }
 
-    this.state = {
-      cards: cards,
-      selected: null,
-      secondSelected: null,
-      totalClicks: 0
-    };
+    return cards;
+  }
 
-    this.allowClicks = true;
-    this.cardClick = this.cardClick.bind(this);
+  componentDidMount() {
+    document.addEventListener("keydown", this.resetGame);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.resetGame);
+  }
+
+  resetGame(event) {
+    if(event.keyCode == 82) {
+      this.setState({
+        cards: this.genCards(),
+        selected: null,
+        secondSelected: null,
+        totalClicks: 0
+      });
+    }
   }
 
   cardClick(index) {
@@ -87,6 +112,7 @@ class Starter extends React.Component {
     return (<div>
       <h1>Total clicks: {this.state.totalClicks}</h1>
       <div className="cardContainer">{cards}</div>
+      <h6>Press "r" to restart the game</h6>
     </div>);
   }
 }
