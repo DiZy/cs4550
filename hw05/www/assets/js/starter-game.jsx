@@ -32,9 +32,11 @@ class Starter extends React.Component {
   }
 
   resetGame(event) {
-     this.channel
-      .push("reset")
-      .receive("reset", resp => {this.setState(resp.game);})
+    if(event.keyCode == 82) {
+      this.channel
+        .push("reset")
+        .receive("reset", resp => {this.setState(resp.game);});
+    }
   }
 
   cardClick(index) {
@@ -44,9 +46,9 @@ class Starter extends React.Component {
             .receive("ok", resp => {
               this.setState(resp.game);
               if(resp.askForDeselect) {
+                this.allowClicks = false;
                 setTimeout(() => {
                   this.channel.push("deselect").receive("deselected", resp  => {
-                    console.log(resp);
 			              this.setState(resp.game);
 		  	            this.allowClicks = true;
 		               });
