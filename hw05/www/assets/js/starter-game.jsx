@@ -13,9 +13,13 @@ class Starter extends React.Component {
     this.allowClicks = true;
     this.cardClick = this.cardClick.bind(this);
     this.resetGame = this.resetGame.bind(this);
+    this.state = {
+      cards: [],
+      totalClicks: 0
+    };
     this.channel
       .join()
-      .receive("ok", state => {this.setState(state);})
+      .receive("ok", resp => {this.setState(resp.game);})
       .receive("error", resp => { console.log("Unable to join", resp); });
   }
   
@@ -28,6 +32,9 @@ class Starter extends React.Component {
   }
 
   resetGame(event) {
+     this.channel
+      .push("reset")
+      .receive("reset", resp => {this.setState(resp.game);})
   }
 
   cardClick(index) {
@@ -38,7 +45,8 @@ class Starter extends React.Component {
               this.setState(resp.game);
               if(resp.askForDeselect) {
                 setTimeout(() => {
-                  this.channel.push("deselect").receive("deselected", resp.game  => {
+                  this.channel.push("deselect").receive("deselected", resp  => {
+                    console.log(resp);
 			              this.setState(resp.game);
 		  	            this.allowClicks = true;
 		               });
@@ -50,7 +58,7 @@ class Starter extends React.Component {
 
   render() {
     let cards = this.state.cards.map((card, index) => {
-      if(card === null) {
+      if(card === "empty") {
         return <EmptyCard key={index}/>;
       } else {
         let isShown = (index === this.state.selected || index === this.state.secondSelected);

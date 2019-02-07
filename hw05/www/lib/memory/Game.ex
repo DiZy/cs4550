@@ -15,38 +15,52 @@ defmodule Memory.Game do
 
   def client_view(game) do
     cards = game.cards
-    cards = Enum.map cards, fn {k, v} -> 
+    cards = cards
+    |> Enum.with_index
+    |> Enum.map(fn {v, k} -> 
       if k == game.selected or k == game.secondSelected do
         v
       else
-        ""
+        if v == "empty" do
+          "empty"
+        else
+          ""
+        end
       end
-    end
-    cards
+    end)
+    %{cards: cards, totalClicks: game.totalClicks}
   end
 
   def select(game, index) do
+    game = Map.put(game, :totalClicks, game.totalClicks + 1)
     if game.selected == nil do
       game = Map.put(game, :selected, index)
-      %{"game" => game, "askForDeselect" => false}
+      %{game: game, askForDeselect: false}
     else
       game = Map.put(game, :secondSelected, index)
-      %{"game" => game, "askForDeselect" => true}
+      %{game: game, askForDeselect: true}
     end
   end
 
   def deselect(game) do
     letter1 = Enum.at(game.cards, game.selected)
     letter2 = Enum.at(game.cards, game.secondSelected)
+    IO.puts("test")
     if letter1 == letter2 do
+      IO.puts("replaced")
       cards = game.cards
-      Enum.replace_at(cards, game.selected, nil)
-      Enum.replace_at(cards, game.secondSelected, nil)
+      cards = List.replace_at(cards, game.selected, "empty")
+      cards = List.replace_at(cards, game.secondSelected, "empty")
+      IO.puts(cards)
       game = Map.put(game, :cards, cards)
+      game = Map.put(game, :selected, nil)
+      game = Map.put(game, :secondSelected, nil)
+      game
+    else
+      game = Map.put(game, :selected, nil)
+      game = Map.put(game, :secondSelected, nil)
+      game
     end
-    game = Map.put(game, :selected, nil)
-    game = Map.put(game, :secondSelected, nil)
-    game
   end
 
 end
