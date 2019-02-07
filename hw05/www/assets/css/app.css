@@ -1,0 +1,27 @@
+/* This file is for your main application css. */
+
+@import "~milligram/dist/milligram";
+
+.card {
+    width: 80px;
+    height: 40px;
+    margin: 10px;
+    background-color: lightgrey;
+    display: block;
+    float: left;
+}
+
+.emptyCard {
+    background-color: white;
+}
+
+.cardContainer {
+    width: 400px;
+}
+
+.letter {
+    font-size: 24px;
+    width: 80px;
+    color: black;
+    text-align: center;
+}
