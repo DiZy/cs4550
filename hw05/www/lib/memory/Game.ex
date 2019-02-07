@@ -45,13 +45,10 @@ defmodule Memory.Game do
   def deselect(game) do
     letter1 = Enum.at(game.cards, game.selected)
     letter2 = Enum.at(game.cards, game.secondSelected)
-    IO.puts("test")
     if letter1 == letter2 do
-      IO.puts("replaced")
       cards = game.cards
       cards = List.replace_at(cards, game.selected, "empty")
       cards = List.replace_at(cards, game.secondSelected, "empty")
-      IO.puts(cards)
       game = Map.put(game, :cards, cards)
       game = Map.put(game, :selected, nil)
       game = Map.put(game, :secondSelected, nil)
