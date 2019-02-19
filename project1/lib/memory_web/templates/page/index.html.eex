@@ -1,0 +1,4 @@
+<div>
+  <input type="text" id="game-name" placeholder="Enter a game name"/>
+  <button id="start-button">Start</button>
+</div>
