@@ -97,13 +97,14 @@ defmodule Memory.Game do
 
   def client_view(game, user) do
     isUserA = user == game.userA
-    isUserB = user == game.userB
+    isUserB = user == game.userB    
     shipA1 = game.shipA1
     shipA2 = game.shipA2
     shipB1 = game.shipB1
     shipB2 = game.shipB2
     playerAReady = shipA1 != [] and shipA2 != []
     playerBReady = shipB1 != [] and shipB2 != []
+    _ = IO.puts(user)
     if isUserA do
       hitsOnOtherPlayerShip1 = Enum.filter(shipB1, fn v ->
         v.hit

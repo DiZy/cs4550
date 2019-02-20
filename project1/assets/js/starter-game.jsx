@@ -61,11 +61,11 @@ class Starter extends React.Component {
     return (<div>
       <h1>{gameStatus}</h1>
       <div>
-        <div class="half">
+        <div className="half">
           Your Board:
           <div>{playerBoard}</div>
         </div>
-        <div class="half">
+        <div className="half">
           Enemy Board:
           <div>{enemyBoard}</div>
         </div>

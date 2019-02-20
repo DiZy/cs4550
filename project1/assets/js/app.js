@@ -21,11 +21,12 @@ import game_init from "./starter-game";
 
 $(() => {
   $('#start-button').click(function() {
-    location.href = '/game/' + $('#game-name').val();
+    location.href = '/game/' + $('#game-name').val() + '/' + $('#user-name').val();
   });
 
   let root = $('#root')[0];
   if(root) {
+    socket.connect()
     let channel = socket.channel("game:" + window.gameName, {});
     game_init(root, channel);
   }

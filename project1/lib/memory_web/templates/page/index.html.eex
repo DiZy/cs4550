@@ -1,4 +1,5 @@
 <div>
   <input type="text" id="game-name" placeholder="Enter a game name"/>
+  <input type="text" id="user-name" placeholder="Enter a user name"/>
   <button id="start-button">Start</button>
 </div>

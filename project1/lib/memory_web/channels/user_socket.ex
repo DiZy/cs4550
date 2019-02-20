@@ -15,8 +15,18 @@ defmodule MemoryWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket, _connect_info) do
-    {:ok, socket}
+  # def connect(_params, socket, _connect_info) do
+  #   {:ok, socket}
+  # end
+  def connect(%{"token" => token}, socket, _connect_info) do
+    _ = IO.puts(token)
+    # max_age: 1209600 is equivalent to two weeks in seconds
+    case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
+      {:ok, user} ->
+        {:ok, assign(socket, :user, user)}
+      {:error, reason} ->
+        :error
+    end
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
@@ -29,5 +39,8 @@ defmodule MemoryWeb.UserSocket do
   #     MemoryWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
-  def id(_socket), do: nil
+  # def id(_socket), do: nil
+  def id(socket) do
+    "user_socket:#{socket.assigns.user}"
+  end
 end
