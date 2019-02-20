@@ -6,10 +6,11 @@ defmodule MemoryWeb.GameChannel do
   def join("game:" <> name, payload, socket) do
     if authorized?(payload) do
       user = socket.assigns[:user]
-      game = GameServer.show(name)
+      _startServer = GameServer.start(name)
+      game = GameServer.join(name, user)
       socket = socket
       |> assign(:name, name)
-      #{:ok, %{join: name, game: Game.client_view(game)}, socket}
+      {:ok, %{game: Game.client_view(game, user)}, socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
@@ -18,13 +19,15 @@ defmodule MemoryWeb.GameChannel do
   def handle_in("placeShip", payload, socket) do
     name = socket.assigns[:name]
     user = socket.assigns[:user]
-    GameServer.placeShip(name, user, payload.shipNumber, payload.points)
+    game = GameServer.placeShip(name, user, payload.shipNumber, payload.points)
+    {:ok, %{game: Game.client_view(game, user)}, socket}
   end
 
   def handle_in("attack", payload, socket) do
     name = socket.assigns[:name]
     user = socket.assigns[:user]
-    GameServer.attack(name, user, payload.x, payload.y)
+    game = GameServer.attack(name, user, payload.x, payload.y)
+    {:ok, %{game: Game.client_view(game, user)}, socket}
   end
   
   # Add authorization logic here as required.

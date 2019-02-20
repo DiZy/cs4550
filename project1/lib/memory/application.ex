@@ -13,6 +13,7 @@ defmodule Memory.Application do
       # Starts a worker by calling: Memory.Worker.start_link(arg)
       # {Memory.Worker, arg},
       Memory.BackupAgent,
+      Memory.GameSup,
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

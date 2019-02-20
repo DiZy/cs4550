@@ -100,7 +100,8 @@ defmodule Memory.Game do
         selfPlayerReady: playerAReady,
         ship1: shipA1,
         ship2: shipA2,
-        yourTurn: game.turnA
+        yourTurn: game.turnA,
+        winner: game.winner,
       }
     else
       %{
@@ -108,7 +109,8 @@ defmodule Memory.Game do
         selfPlayerReady: playerBReady,
         ship1: shipB1,
         ship2: shipB2,
-        yourTurn: !game.turnA
+        yourTurn: !game.turnA,
+        winner: game.winner,
       }
     end
   end

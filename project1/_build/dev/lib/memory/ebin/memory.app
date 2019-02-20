@@ -6,6 +6,7 @@
               {description,"memory"},
               {modules,['Elixir.Memory','Elixir.Memory.Application',
                         'Elixir.Memory.BackupAgent','Elixir.Memory.Game',
+                        'Elixir.Memory.GameServer','Elixir.Memory.GameSup',
                         'Elixir.MemoryWeb','Elixir.MemoryWeb.Endpoint',
                         'Elixir.MemoryWeb.ErrorHelpers',
                         'Elixir.MemoryWeb.ErrorView',
