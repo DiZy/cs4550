@@ -45,7 +45,7 @@ defmodule Memory.Game do
         end
       end)
       shipB2 = game.shipB2
-      shipB2 = Enum.map(shipB1, fn v ->
+      shipB2 = Enum.map(shipB2, fn v ->
         if v.x == x and v.y == y do
           Map.put(v, :hit, true)
         else
@@ -69,7 +69,7 @@ defmodule Memory.Game do
         end
       end)
       shipA2 = game.shipA2
-      shipA2 = Enum.map(shipA1, fn v ->
+      shipA2 = Enum.map(shipA2, fn v ->
         if v.x == x and v.y == y do
           Map.put(v, :hit, true)
         else
@@ -88,6 +88,7 @@ defmodule Memory.Game do
 
   def client_view(game, user) do
     isUserA = user == game.userA
+    isUserB = user == game.userB
     shipA1 = game.shipA1
     shipA2 = game.shipA2
     shipB1 = game.shipB1
@@ -95,6 +96,13 @@ defmodule Memory.Game do
     playerAReady = shipA1 != nil and shipB1 != nil
     playerBReady = shipB1 != nil and shipB2 != nil
     if isUserA do
+      hitsOnOtherPlayerShip1 = Enum.filter(shipB1, fn v ->
+        v.hit
+      end)
+      hitsOnOtherPlayerShip2 = Enum.filter(shipB2, fn v ->
+        v.hit
+      end)
+      hitsOnOtherPlayer = Enum.concat(hitsOnOtherPlayerShip1, hitsOnOtherPlayerShip2)
       %{
         gameReady: playerAReady and playerBReady,
         selfPlayerReady: playerAReady,
@@ -102,16 +110,31 @@ defmodule Memory.Game do
         ship2: shipA2,
         yourTurn: game.turnA,
         winner: game.winner,
+        hitsOnOtherPlayer: hitsOnOtherPlayer,
       }
     else
-      %{
-        gameReady: playerAReady and playerBReady,
-        selfPlayerReady: playerBReady,
-        ship1: shipB1,
-        ship2: shipB2,
-        yourTurn: !game.turnA,
-        winner: game.winner,
-      }
+      if isUserB do
+        hitsOnOtherPlayerShip1 = Enum.filter(shipA1, fn v ->
+          v.hit
+        end)
+        hitsOnOtherPlayerShip2 = Enum.filter(shipA2, fn v ->
+          v.hit
+        end)
+        hitsOnOtherPlayer = Enum.concat(hitsOnOtherPlayerShip1, hitsOnOtherPlayerShip2)
+        %{
+          gameReady: playerAReady and playerBReady,
+          selfPlayerReady: playerBReady,
+          ship1: shipB1,
+          ship2: shipB2,
+          yourTurn: !game.turnA,
+          winner: game.winner,
+          hitsOnOtherPlayer: hitsOnOtherPlayer,
+        }
+      else
+        %{
+          gameIsFull: true,
+        }
+      end
     end
   end
 
