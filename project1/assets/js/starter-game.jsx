@@ -22,8 +22,18 @@ class Starter extends React.Component {
   render() {
 
     let gameStatus = "Game is full";
-    let playerBoard = null;
-    let enemyBoard = null;
+    let playerBoard = [...Array(6).keys()].map((x) => {
+      let row = [...Array(6).keys()].map((y) => {
+        return <GridSpace />;
+      });
+      return row.concat([<br />]);
+    });
+    let enemyBoard = [...Array(6).keys()].map((x) => {
+      let row = [...Array(6).keys()].map((y) => {
+        return <GridSpace />;
+      });
+      return row.concat([<br />]);
+    });;
     console.log(this.state);
     if (!this.state.gameIsFull) {
       if (this.state.winner) {
@@ -49,9 +59,23 @@ class Starter extends React.Component {
       }
     }
     return (<div>
-      <div>{gameStatus}</div>
-      <div>{playerBoard}</div>
-      <div>{enemyBoard}</div>
+      <h1>{gameStatus}</h1>
+      <div>
+        <div class="half">
+          Your Board:
+          <div>{playerBoard}</div>
+        </div>
+        <div class="half">
+          Enemy Board:
+          <div>{enemyBoard}</div>
+        </div>
+      </div>
     </div>)
+  }
+}
+
+class GridSpace extends React.Component {
+  render() {
+    return <div className="grid-space">{this.props.children}</div>;
   }
 }

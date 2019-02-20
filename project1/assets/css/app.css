@@ -2,26 +2,14 @@
 
 @import "~milligram/dist/milligram";
 
-.card {
-    width: 80px;
-    height: 40px;
-    margin: 10px;
-    background-color: lightgrey;
-    display: block;
+.grid-space {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    border: 1px solid black;
+}
+
+.half {
     float: left;
-}
-
-.emptyCard {
-    background-color: white;
-}
-
-.cardContainer {
-    width: 400px;
-}
-
-.letter {
-    font-size: 24px;
-    width: 80px;
-    color: black;
-    text-align: center;
+    width: 50%;
 }
