@@ -4,16 +4,16 @@ defmodule Memory.Game do
       userA: nil,
       userB: nil,
       turnA: true,
-      shipA1: nil,
-      shipA2: nil,
-      shipB1: nil,
-      shipB2: nil,
+      shipA1: [],
+      shipA2: [],
+      shipB1: [],
+      shipB2: [],
       winner: nil,
      }
   end
 
   def join(game, user) do
-    if game.userA == nil do
+    if game.userA == nil or game.userA == user do
       Map.put(game, :userA, user)
 
     else
@@ -35,54 +35,64 @@ defmodule Memory.Game do
 
   def attack(game, user, x, y) do
     attackerIsUserA = user == game.userA
-    if attackerIsUserA do
-      shipB1 = game.shipB1
-      shipB1 = Enum.map(shipB1, fn v ->
-        if v.x == x and v.y == y do
-          Map.put(v, :hit, true)
+    shipA1 = game.shipA1
+    shipA2 = game.shipA2
+    shipB1 = game.shipB1
+    shipB2 = game.shipB2
+    playerAReady = shipA1 != [] and shipB1 != []
+    playerBReady = shipB1 != [] and shipB2 != []
+    if playerAReady and playerBReady do
+      if attackerIsUserA do
+        shipB1 = game.shipB1
+        shipB1 = Enum.map(shipB1, fn v ->
+          if v.x == x and v.y == y do
+            Map.put(v, :hit, true)
+          else
+            v
+          end
+        end)
+        shipB2 = game.shipB2
+        shipB2 = Enum.map(shipB2, fn v ->
+          if v.x == x and v.y == y do
+            Map.put(v, :hit, true)
+          else
+            v
+          end
+        end)
+        game = Map.put(game, :shipB1, shipB1)
+        game = Map.put(game, :shipB2, shipB2)
+        if shipDestroyed(shipB1) and shipDestroyed(shipB2) do
+          Map.put(game, :winner, game.userA)
         else
-          v
+          game
         end
-      end)
-      shipB2 = game.shipB2
-      shipB2 = Enum.map(shipB2, fn v ->
-        if v.x == x and v.y == y do
-          Map.put(v, :hit, true)
-        else
-          v
-        end
-      end)
-      game = Map.put(game, :shipB1, shipB1)
-      game = Map.put(game, :shipB2, shipB2)
-      if shipDestroyed(shipB1) and shipDestroyed(shipB2) do
-        Map.put(game, :winner, game.userA)
       else
-        game
+        shipA1 = game.shipA1
+        shipA1 = Enum.map(shipA1, fn v ->
+          if v.x == x and v.y == y do
+            Map.put(v, :hit, true)
+          else
+            v
+          end
+        end)
+        shipA2 = game.shipA2
+        shipA2 = Enum.map(shipA2, fn v ->
+          if v.x == x and v.y == y do
+            Map.put(v, :hit, true)
+          else
+            v
+          end
+        end)
+        game = Map.put(game, :shipA1, shipA1)
+        game = Map.put(game, :shipA2, shipA2)
+        if shipDestroyed(shipA1) and shipDestroyed(shipA2) do
+          Map.put(game, :winner, game.userB)
+        else
+          game
+        end
       end
     else
-      shipA1 = game.shipA1
-      shipA1 = Enum.map(shipA1, fn v ->
-        if v.x == x and v.y == y do
-          Map.put(v, :hit, true)
-        else
-          v
-        end
-      end)
-      shipA2 = game.shipA2
-      shipA2 = Enum.map(shipA2, fn v ->
-        if v.x == x and v.y == y do
-          Map.put(v, :hit, true)
-        else
-          v
-        end
-      end)
-      game = Map.put(game, :shipA1, shipA1)
-      game = Map.put(game, :shipA2, shipA2)
-      if shipDestroyed(shipA1) and shipDestroyed(shipA2) do
-        Map.put(game, :winner, game.userB)
-      else
-        game
-      end
+      game
     end
   end
 
@@ -93,8 +103,8 @@ defmodule Memory.Game do
     shipA2 = game.shipA2
     shipB1 = game.shipB1
     shipB2 = game.shipB2
-    playerAReady = shipA1 != nil and shipB1 != nil
-    playerBReady = shipB1 != nil and shipB2 != nil
+    playerAReady = shipA1 != [] and shipB1 != []
+    playerBReady = shipB1 != [] and shipB2 != []
     if isUserA do
       hitsOnOtherPlayerShip1 = Enum.filter(shipB1, fn v ->
         v.hit
