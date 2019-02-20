@@ -15,7 +15,6 @@ defmodule Memory.Game do
   def join(game, user) do
     if game.userA == nil or game.userA == user do
       Map.put(game, :userA, user)
-
     else
       if game.userB == nil do
         Map.put(game, :userB, user)
@@ -39,7 +38,7 @@ defmodule Memory.Game do
     shipA2 = game.shipA2
     shipB1 = game.shipB1
     shipB2 = game.shipB2
-    playerAReady = shipA1 != [] and shipB1 != []
+    playerAReady = shipA1 != [] and shipA2 != []
     playerBReady = shipB1 != [] and shipB2 != []
     if playerAReady and playerBReady do
       if attackerIsUserA do
@@ -103,7 +102,7 @@ defmodule Memory.Game do
     shipA2 = game.shipA2
     shipB1 = game.shipB1
     shipB2 = game.shipB2
-    playerAReady = shipA1 != [] and shipB1 != []
+    playerAReady = shipA1 != [] and shipA2 != []
     playerBReady = shipB1 != [] and shipB2 != []
     if isUserA do
       hitsOnOtherPlayerShip1 = Enum.filter(shipB1, fn v ->
@@ -121,6 +120,7 @@ defmodule Memory.Game do
         yourTurn: game.turnA,
         winner: game.winner,
         hitsOnOtherPlayer: hitsOnOtherPlayer,
+        gameIsFull: false,
       }
     else
       if isUserB do
@@ -139,6 +139,7 @@ defmodule Memory.Game do
           yourTurn: !game.turnA,
           winner: game.winner,
           hitsOnOtherPlayer: hitsOnOtherPlayer,
+          gameIsFull: false,
         }
       else
         %{
