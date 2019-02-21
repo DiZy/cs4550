@@ -106,7 +106,6 @@ defmodule Memory.Game do
     shipB2 = game.shipB2
     playerAReady = shipA1 != [] and shipA2 != []
     playerBReady = shipB1 != [] and shipB2 != []
-    _ = IO.puts(user)
     if isUserA do
       hitsOnOtherPlayerShip1 = Enum.filter(shipB1, fn v ->
         v.hit

@@ -3,7 +3,7 @@ defmodule MemoryWeb.GameChannel do
   alias Memory.Game
   alias Memory.GameServer
 
-  intercept ["send_update"]
+  intercept ["send_update", "reset"]
 
   def join("game:" <> name, payload, socket) do
     if authorized?(payload) do
@@ -38,7 +38,7 @@ defmodule MemoryWeb.GameChannel do
     name = socket.assigns[:name]
     user = socket.assigns[:user]
     game = GameServer.reset(name)
-    broadcast!(socket, "send_update", %{})
+    broadcast!(socket, "reset", %{})
     {:reply, {:ok, %{game: Game.client_view(game, user)}}, socket}
   end
 
@@ -47,6 +47,14 @@ defmodule MemoryWeb.GameChannel do
     user = socket.assigns[:user]
     game = GameServer.show(name)
     push(socket, "update", %{game: Game.client_view(game, user)})
+    {:noreply, socket}
+  end
+
+  def handle_out("reset", _payload, socket) do
+    name = socket.assigns[:name]
+    user = socket.assigns[:user]
+    game = GameServer.show(name)
+    push(socket, "reset", %{game: Game.client_view(game, user)})
     {:noreply, socket}
   end
   
