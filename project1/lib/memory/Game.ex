@@ -115,7 +115,7 @@ defmodule Memory.Game do
         v.hit
       end)
       hitsOnOtherPlayer = Enum.concat(hitsOnOtherPlayerShip1, hitsOnOtherPlayerShip2)
-      winner = if game.winner == nil, do: nil, else: (game.winner == game.userA && "You Win") || (game.winner == game.userB && "You Lose")
+      winner = if game.winner == nil, do: nil, else: (game.winner == game.userA && "You Win") || "You Lose"
       %{
         gameReady: playerAReady and playerBReady,
         selfPlayerReady: playerAReady,
@@ -135,7 +135,7 @@ defmodule Memory.Game do
           v.hit
         end)
         hitsOnOtherPlayer = Enum.concat(hitsOnOtherPlayerShip1, hitsOnOtherPlayerShip2)
-        winner = if game.winner == nil, do: nil, else: (game.winner == game.userB && "You Win") || (game.winner == game.userA && "You Lose")
+        winner = if game.winner == nil, do: nil, else: (game.winner == game.userB && "You Win") || "You Lose"
         %{
           gameReady: playerAReady and playerBReady,
           selfPlayerReady: playerBReady,
