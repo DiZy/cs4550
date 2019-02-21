@@ -37,7 +37,6 @@ class Starter extends Component {
 
   componentDidUpdate() {
     if (this.state.failed) {
-      console.log('muie')
       setTimeout(() => this.setState({failed: false}), 2000)
     }
   }
@@ -114,8 +113,20 @@ class Starter extends Component {
     return [...Array(GRID_SIZE).keys()].map(yCoord => {
       let row = [...Array(GRID_SIZE).keys()].map(xCoord => {
 
-        let hasShip = ship1.some(entry => entry.x == xCoord && entry.y == yCoord)
-          || ship2.some(entry => entry.x == xCoord && entry.y == yCoord);
+
+        const ship1Index = ship1.findIndex(entry => entry.x == xCoord && entry.y == yCoord)
+        const ship2Index = ship2.findIndex(entry => entry.x == xCoord && entry.y == yCoord);
+
+        const hasShip = ship1Index != -1 || ship2Index != -1;
+        let hit = false;
+
+        if (hasShip) {
+          if (ship1Index != -1 && ship1[ship1Index].x == xCoord && ship1[ship1Index].y == yCoord && ship1[ship1Index].hit) {
+            hit = true;
+          } else if (ship2Index != -1 && ship2[ship2Index].x == xCoord && ship2[ship2Index].y == yCoord && ship2[ship2Index].hit) {
+            hit = true;
+          }
+        }
 
         let highlight = false;
 
@@ -127,7 +138,7 @@ class Starter extends Component {
           }
         }
 
-        return <Tile hasShip={hasShip} highlight={highlight}>x<sub>{xCoord}</sub> y<sub>{yCoord}</sub></Tile>;
+        return <Tile hit={hit} hasShip={hasShip} highlight={highlight}>x<sub>{xCoord}</sub> y<sub>{yCoord}</sub></Tile>;
       });
       return row.concat([<br />]);
     });
@@ -170,7 +181,6 @@ class Starter extends Component {
         gameStatus = "Place your second ship";
       }
       else if (this.state.gameReady) {
-        //TODO: code to generate boards
         if (this.state.yourTurn) {
           gameStatus = "Place your attack";
         }
@@ -209,13 +219,15 @@ class Starter extends Component {
                 </div>
                 {this.state.selfPlayerReady ? '' : <button onClick={e => this.setState({isShipVertical: !this.state.isShipVertical})}> Rotate </button>}
                 <button disabled={this.state.selfPlayerReady && (!this.state.gameReady || !this.state.yourTurn)} onClick={this.state.selfPlayerReady ? this.attack : this.placeShip}> {this.state.selfPlayerReady ? 'ATACK' : 'PLACE'} </button> <br />
-                {this.state.failed ? 'Your choice was out of bounds or conflicted with an existing ship' : ''}
+                <br />
+                <button onClick={() => {this.channel.push("reset"); window.location.reload();}}> RESET GAME</button>
               </div>
             </div>
             <div className="game__side">
               <div className="game__header2">Enemy Waters</div>
               <div>{this.renderEnemyGrid()}</div>
             </div>
+            {this.state.failed ? <div className="game__warning">Your choice was out of bounds or conflicted with an existing ship</div>: ''}
           </div>}
          
         </div>
@@ -231,7 +243,7 @@ class Tile extends Component {
     const classNamez = '';
 
     return (
-      <div className={`grid-space ${hit === true ? 'red' : hit === false ? 'orange' : ''} ${ highlight ? 'teal' : ''} ${ hasShip ? 'blue': ''}`} onClick={onClick}>{children}</div>
+      <div className={`grid-space ${hit === true ? 'red' : ''} ${ highlight ? 'teal' : ''} ${ hasShip ? 'blue': ''}`} onClick={onClick}>{children}</div>
     );
   }
 }

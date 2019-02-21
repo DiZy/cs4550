@@ -668,13 +668,14 @@ body {
 .game__board {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .game__controls {
     display: flex;
     justify-content: left;
-    width: 800px;
-    margin: 25px auto;
+    width: 900px;
+    margin: 55px auto 0;
     position: absolute;
 }
 
@@ -686,6 +687,15 @@ body {
 
 .game__input {
     display: flex;
+}
+
+.game__warning {
+    flex: 1 100%;
+    text-align: center;
+    margin: 10px;
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: white;
 }
 
 .game__input > label {
