@@ -17,3 +17,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+
+Backgrounds free for commercial use at: https://www.pexels.com/photo/top-view-photo-of-boat-near-airplane-1575833/
+and https://www.pexels.com/photo/sea-landscape-water-ocean-37859/

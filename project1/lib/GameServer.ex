@@ -57,4 +57,8 @@ defmodule Memory.GameServer do
     Memory.BackupAgent.put(name, game)
     {:reply, game, game}
   end
+
+  def handle_call({:show, name}, _from, game) do
+    {:reply, game, game}
+  end
 end

@@ -600,14 +600,108 @@ img {
 }
 /* This file is for your main application css. */
 
-.grid-space {
-    width: 50px;
-    height: 50px;
-    display: inline-block;
-    border: 1px solid black;
+body {
+    margin: -25px 0 0;
 }
 
-.half {
-    float: left;
-    width: 50%;
+.background {
+    position: absolute;
+    z-index: -1;
+    width: 100vw;
+    max-height: 100vh;
+    height: auto;
+    object-fit: cover;
+    
+}
+
+.game {
+    padding: 25px;
+}
+
+.game__header {
+    color: white;
+    font-size: 4rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.game__header2 {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-transform: uppercase;
+}
+
+.grid-space {
+    width: 75px;
+    height: 65px;
+    display: inline-block;
+    border: 3px solid white;
+    padding: 0px;
+    margin: 5px;
+
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: cursive;
+}
+
+.grid-space.blue {
+    background-color: blue;
+}
+
+.grid-space.teal {
+    background-color: #1f227d;
+}
+
+.grid-space.red {
+    background-color: red;
+}
+
+.grid-space.orange {
+    background-color: orange;
+}
+
+.game__board {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.game__controls {
+    display: flex;
+    justify-content: left;
+    width: 800px;
+    margin: 25px auto;
+    position: absolute;
+}
+
+.game__controls > button {
+    margin: -2px 15px;
+    background-color: black;
+    border: 0.1rem solid #0089ff;
+}
+
+.game__input {
+    display: flex;
+}
+
+.game__input > label {
+    margin: 2px 5px;
+    color: white;
+    text-transform: uppercase;
+    font-family: cursive;
+}
+
+.game__input > input {
+    background: none;
+    border: 3px solid #150a6b;
+    color: white;
+    padding: 5px;
+    text-transform: uppercase;
+    width: 36px;
+    text-align: center;
+    font-size: 1.5rem;
 }

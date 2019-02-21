@@ -42,6 +42,7 @@ defmodule Memory.Game do
     playerBReady = shipB1 != [] and shipB2 != []
     if playerAReady and playerBReady do
       if attackerIsUserA do
+        game = Map.put(game, :turnA, false)
         shipB1 = game.shipB1
         shipB1 = Enum.map(shipB1, fn v ->
           if v.x == x and v.y == y do
@@ -66,6 +67,7 @@ defmodule Memory.Game do
           game
         end
       else
+        game = Map.put(game, :turnA, true)
         shipA1 = game.shipA1
         shipA1 = Enum.map(shipA1, fn v ->
           if v.x == x and v.y == y do
@@ -153,7 +155,7 @@ defmodule Memory.Game do
   def placeShip(game, user, shipNumber, points) do
     isUserA = user == game.userA
     ship = Enum.map(points, fn v -> 
-      %{x: v.x, y: v.y, hit: false}
+      %{x: v["x"], y: v["y"], hit: false}
     end)
     if isUserA do
       if shipNumber == 1 do

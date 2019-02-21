@@ -3,6 +3,8 @@ defmodule MemoryWeb.GameChannel do
   alias Memory.Game
   alias Memory.GameServer
 
+  intercept ["send_update"]
+
   def join("game:" <> name, payload, socket) do
     if authorized?(payload) do
       user = socket.assigns[:user]
@@ -19,15 +21,25 @@ defmodule MemoryWeb.GameChannel do
   def handle_in("placeShip", payload, socket) do
     name = socket.assigns[:name]
     user = socket.assigns[:user]
-    game = GameServer.placeShip(name, user, payload.shipNumber, payload.points)
-    {:ok, %{game: Game.client_view(game, user)}, socket}
+    game = GameServer.placeShip(name, user, payload["shipNumber"], payload["points"])
+    broadcast!(socket, "send_update", %{})
+    {:reply, {:ok, %{game: Game.client_view(game, user)}}, socket}
   end
 
   def handle_in("attack", payload, socket) do
     name = socket.assigns[:name]
     user = socket.assigns[:user]
-    game = GameServer.attack(name, user, payload.x, payload.y)
-    {:ok, %{game: Game.client_view(game, user)}, socket}
+    game = GameServer.attack(name, user, payload["x"], payload["y"])
+    broadcast!(socket, "send_update", %{})
+    {:reply, {:ok, %{game: Game.client_view(game, user)}}, socket}
+  end
+
+  def handle_out("send_update", _payload, socket) do
+    name = socket.assigns[:name]
+    user = socket.assigns[:user]
+    game = GameServer.show(name)
+    push(socket, "update", %{game: Game.client_view(game, user)})
+    {:noreply, socket}
   end
   
   # Add authorization logic here as required.
