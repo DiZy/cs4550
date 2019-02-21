@@ -33,7 +33,11 @@ defmodule Memory.GameServer do
   end
 
   def show(name) do
-    GenServer.call(reg(name), {:show, name})
+    GenServer.call(reg(name), {:show})
+  end
+
+  def reset(name) do
+    GenServer.call(reg(name), {:reset, name})
   end
 
   def init(game) do
@@ -58,7 +62,13 @@ defmodule Memory.GameServer do
     {:reply, game, game}
   end
 
-  def handle_call({:show, name}, _from, game) do
+  def handle_call({:show}, _from, game) do
+    {:reply, game, game}
+  end
+
+  def handle_call({:reset, name}, _from, game) do
+    game = Memory.Game.reset(game)
+    Memory.BackupAgent.put(name, game)
     {:reply, game, game}
   end
 end
