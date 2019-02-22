@@ -28,7 +28,8 @@ export const DEFAULT_STATE = {
 
 export const ACTIONS = {
   PLACE_SHIP: "placeShip",
-
+  ATTACK: "attack",
+  RESET: "reset"
 };
 
 class Starter extends Component {
@@ -58,7 +59,7 @@ class Starter extends Component {
     this.setState(view.game);
   }
 
-  dispatchAction = (action, payload) => {
+  dispatchAction = (action, payload = {}) => {
     this.setState({
       logs: [
         { action, payload },
@@ -123,15 +124,20 @@ class Starter extends Component {
           } 
         }
     }
-    
+
     this.setState({failed: true});
   }
 
   attack = () => {
-    this.channel.push("attack", {
+    this.dispatchAction(ACTIONS.ATTACK, {
       x: this.state.x,
       y: this.state.y
-    });
+    })
+  }
+
+  resetGame = () => {
+    this.dispatchAction(ACTIONS.RESET)
+    window.location.reload()
   }
 
   renderGrid = () => {
@@ -193,7 +199,7 @@ class Starter extends Component {
 
     if (!gameIsFull) {
       if (winner) {
-        gameStatus = "Winner is " + winner;
+        gameStatus = winner;
       }
       else if (ship1.length == 0) {
         gameStatus = "Place your first ship";
@@ -264,7 +270,7 @@ class Starter extends Component {
           </div>}
           <div className="game__settings">
             {this.state.showConsoleTip ? <div className="game__tip">Open your console 👻 !</div>: ''}
-            <button onClick={() => {this.channel.push("reset"); window.location.reload();}}>
+            <button onClick={this.reset}>
               RESET GAME
             </button>
             <button className="game__logs" onClick={this.showLogs}>
