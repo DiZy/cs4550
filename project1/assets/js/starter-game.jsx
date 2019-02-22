@@ -270,7 +270,7 @@ class Starter extends Component {
           </div>}
           <div className="game__settings">
             {this.state.showConsoleTip ? <div className="game__tip">Open your console 👻 !</div>: ''}
-            <button onClick={this.reset}>
+            <button onClick={this.resetGame}>
               RESET GAME
             </button>
             <button className="game__logs" onClick={this.showLogs}>
