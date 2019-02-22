@@ -19,6 +19,14 @@ import $ from "jquery";
 import socket from "./socket";
 import game_init from "./starter-game";
 
+({
+	gameReady: false,
+	selfPlayerReady: false,
+	yourTurn: false,
+	ship1: null,
+	ship2: null,
+})
+
 $(() => {
   $('#start-button').click(function() {
     location.href = '/game/' + $('#game-name').val() + '/' + $('#user-name').val();
@@ -31,4 +39,5 @@ $(() => {
     game_init(root, channel);
   }
 });
+
 
