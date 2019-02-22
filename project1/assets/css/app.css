@@ -27,6 +27,7 @@ body {
     font-family: sans-serif;
     text-transform: uppercase;
     text-align: center;
+    text-shadow: 0px 0px 2px black;
 }
 
 .game__header2 {
@@ -35,6 +36,7 @@ body {
     font-weight: bold;
     font-family: sans-serif;
     text-transform: uppercase;
+    text-shadow: 0px 0px 2px black;
 }
 
 .grid-space {
@@ -49,6 +51,7 @@ body {
     text-transform: uppercase;
     font-weight: bold;
     font-family: cursive;
+    text-shadow: 0px 0px 2px black;
 }
 
 .grid-space.blue {
@@ -70,19 +73,36 @@ body {
 .game__board {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    margin-top: 100px;
 }
 
 .game__controls {
     display: flex;
     justify-content: left;
-    width: 800px;
-    margin: 25px auto;
+    width: 900px;
+    margin: 55px auto 0;
     position: absolute;
+}
+
+.game__settings {
+    display: flex;
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    align-items: baseline;
+}
+
+.game__settings > button {
+    background-color: blue;
+    border: 0.1rem solid #0089ff;
+    margin-left: 25px;
 }
 
 .game__controls > button {
     margin: -2px 15px;
-    background-color: black;
+    background-color: blue;
     border: 0.1rem solid #0089ff;
 }
 
@@ -90,20 +110,43 @@ body {
     display: flex;
 }
 
+.game__warning {
+    flex: 1 100%;
+    text-align: center;
+    margin: 10px;
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: white;
+    text-shadow: 0px 0px 2px black;
+}
+
 .game__input > label {
     margin: 2px 5px;
     color: white;
     text-transform: uppercase;
     font-family: cursive;
+    text-shadow: 0px 0px 2px black;
+}
+
+.game__tip {
+    color: white;
+    text-transform: uppercase;
+    text-shadow: 0px 0px 2px black;
 }
 
 .game__input > input {
     background: none;
-    border: 3px solid #150a6b;
+    border: 3px solid blue;
     color: white;
     padding: 5px;
     text-transform: uppercase;
     width: 36px;
     text-align: center;
     font-size: 1.5rem;
+    text-shadow: 0px 0px 2px black;
+}
+
+.f--b {
+    color: white;
+    text-shadow: 0px 0px 2px black;
 }
