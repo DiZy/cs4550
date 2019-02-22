@@ -10,7 +10,7 @@ export default function game_init(root, channel) {
 }
 
 export const GRID_SIZE = 5;
-export const SHIP_SIZE = 1;
+export const SHIP_SIZE = 3;
 export const SHIP_BOUNDARY = Math.floor(SHIP_SIZE / 2);
 export const DEFAULT_STATE = {
   gameIsFull: true,
