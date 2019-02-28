@@ -1,0 +1,9 @@
+<section class="row">
+  <div>
+        <%= if @current_user do %>
+          <%= render Tasks1Web.TaskView, "index.html", Map.put(assigns, :tasks, @current_user.tasks) %>
+        <% else %>
+           <p><%= link "Register", to: Routes.user_path(@conn, :new) %></p>
+        <% end %>
+      </div>
+</section>

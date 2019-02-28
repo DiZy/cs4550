@@ -1,0 +1,8 @@
+<h1>Show Task</h1>
+
+Name: <%= @task.name %>
+Description: <%= @task.desc %>
+Minutes Spent: <%= @task.minutes %>
+Complete: <%= @task.complete %>
+
+<span><%= link "Edit", to: Routes.task_path(@conn, :edit, @task) %></span>
