@@ -1,0 +1,20 @@
+<section class="row">
+  <div>
+        <%= if @current_user do %>
+          <%= render Tasks1Web.TaskView, "index.html", Map.put(assigns, :tasks, @current_user.tasks) %>
+          <%= if length(@current_user.usersmanaged()) != 0 do %>
+            <div>
+              <h2>Task Report</h2>
+              <%= for usermanaged <- @current_user.usersmanaged() do %>
+                <div class="box">
+                  <h3>User: <%= usermanaged.email %></h3>
+                  <%= render Tasks1Web.TaskView, "index.html", Map.put(assigns, :tasks, usermanaged.tasks) %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+           <p><%= link "Register", to: Routes.user_path(@conn, :new) %></p>
+        <% end %>
+      </div>
+</section>
