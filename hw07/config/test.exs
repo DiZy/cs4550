@@ -13,6 +13,6 @@ config :logger, level: :warn
 config :tasks1, Tasks1.Repo,
   username: "david",
   password: "davidpass",
-  database: "tasks1",
+  database: "tasks2",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

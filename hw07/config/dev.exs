@@ -70,6 +70,6 @@ config :phoenix, :plug_init_mode, :runtime
 config :tasks1, Tasks1.Repo,
   username: "david",
   password: "davidpass",
-  database: "tasks1",
+  database: "tasks2",
   hostname: "localhost",
   pool_size: 10
