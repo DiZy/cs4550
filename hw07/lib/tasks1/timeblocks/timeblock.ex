@@ -6,7 +6,7 @@ defmodule Tasks1.Timeblocks.Timeblock do
   schema "timeblocks" do
     field :end, :naive_datetime
     field :start, :naive_datetime
-    field :task_id, :id
+    belongs_to :task, Tasks1.Tasks.Task
 
     timestamps()
   end
@@ -14,7 +14,8 @@ defmodule Tasks1.Timeblocks.Timeblock do
   @doc false
   def changeset(timeblock, attrs) do
     timeblock
-    |> cast(attrs, [:start, :end])
+    |> cast(attrs, [:start, :end, :task_id])
+    |> cast_assoc(:task)
     |> validate_required([:start, :end])
   end
 end

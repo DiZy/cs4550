@@ -1,0 +1,18 @@
+<h1>Show Timeblock</h1>
+
+<ul>
+
+  <li>
+    <strong>Start:</strong>
+    <%= @timeblock.start %>
+  </li>
+
+  <li>
+    <strong>End:</strong>
+    <%= @timeblock.end %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.timeblock_path(@conn, :edit, @timeblock) %></span>
+<span><%= link "Back", to: Routes.timeblock_path(@conn, :index) %></span>

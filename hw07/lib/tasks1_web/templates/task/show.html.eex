@@ -2,7 +2,9 @@
 
 Name: <%= @task.name %>
 Description: <%= @task.desc %>
-Minutes Spent: <%= @task.minutes %>
 Complete: <%= @task.complete %>
+
+<h6>Timeblocks:</h6>
+<%= render Tasks1Web.TimeblockView, "index.html", Map.put(assigns, :timeblocks, @task.timeblocks) %>
 
 <span><%= link "Edit", to: Routes.task_path(@conn, :edit, @task) %></span>

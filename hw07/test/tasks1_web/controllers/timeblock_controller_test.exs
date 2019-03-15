@@ -2,16 +2,9 @@ defmodule Tasks1Web.TimeblockControllerTest do
   use Tasks1Web.ConnCase
 
   alias Tasks1.Timeblocks
-  alias Tasks1.Timeblocks.Timeblock
 
-  @create_attrs %{
-    end: ~N[2010-04-17 14:00:00],
-    start: ~N[2010-04-17 14:00:00]
-  }
-  @update_attrs %{
-    end: ~N[2011-05-18 15:01:01],
-    start: ~N[2011-05-18 15:01:01]
-  }
+  @create_attrs %{end: ~N[2010-04-17 14:00:00], start: ~N[2010-04-17 14:00:00]}
+  @update_attrs %{end: ~N[2011-05-18 15:01:01], start: ~N[2011-05-18 15:01:01]}
   @invalid_attrs %{end: nil, start: nil}
 
   def fixture(:timeblock) do
@@ -19,56 +12,60 @@ defmodule Tasks1Web.TimeblockControllerTest do
     timeblock
   end
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
-  end
-
   describe "index" do
     test "lists all timeblocks", %{conn: conn} do
       conn = get(conn, Routes.timeblock_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+      assert html_response(conn, 200) =~ "Listing Timeblocks"
+    end
+  end
+
+  describe "new timeblock" do
+    test "renders form", %{conn: conn} do
+      conn = get(conn, Routes.timeblock_path(conn, :new))
+      assert html_response(conn, 200) =~ "New Timeblock"
     end
   end
 
   describe "create timeblock" do
-    test "renders timeblock when data is valid", %{conn: conn} do
+    test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, Routes.timeblock_path(conn, :create), timeblock: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+
+      assert %{id: id} = redirected_params(conn)
+      assert redirected_to(conn) == Routes.timeblock_path(conn, :show, id)
 
       conn = get(conn, Routes.timeblock_path(conn, :show, id))
-
-      assert %{
-               "id" => id,
-               "end" => "2010-04-17T14:00:00",
-               "start" => "2010-04-17T14:00:00"
-             } = json_response(conn, 200)["data"]
+      assert html_response(conn, 200) =~ "Show Timeblock"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.timeblock_path(conn, :create), timeblock: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
+      assert html_response(conn, 200) =~ "New Timeblock"
+    end
+  end
+
+  describe "edit timeblock" do
+    setup [:create_timeblock]
+
+    test "renders form for editing chosen timeblock", %{conn: conn, timeblock: timeblock} do
+      conn = get(conn, Routes.timeblock_path(conn, :edit, timeblock))
+      assert html_response(conn, 200) =~ "Edit Timeblock"
     end
   end
 
   describe "update timeblock" do
     setup [:create_timeblock]
 
-    test "renders timeblock when data is valid", %{conn: conn, timeblock: %Timeblock{id: id} = timeblock} do
+    test "redirects when data is valid", %{conn: conn, timeblock: timeblock} do
       conn = put(conn, Routes.timeblock_path(conn, :update, timeblock), timeblock: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+      assert redirected_to(conn) == Routes.timeblock_path(conn, :show, timeblock)
 
-      conn = get(conn, Routes.timeblock_path(conn, :show, id))
-
-      assert %{
-               "id" => id,
-               "end" => "2011-05-18T15:01:01",
-               "start" => "2011-05-18T15:01:01"
-             } = json_response(conn, 200)["data"]
+      conn = get(conn, Routes.timeblock_path(conn, :show, timeblock))
+      assert html_response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn, timeblock: timeblock} do
       conn = put(conn, Routes.timeblock_path(conn, :update, timeblock), timeblock: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
+      assert html_response(conn, 200) =~ "Edit Timeblock"
     end
   end
 
@@ -77,8 +74,7 @@ defmodule Tasks1Web.TimeblockControllerTest do
 
     test "deletes chosen timeblock", %{conn: conn, timeblock: timeblock} do
       conn = delete(conn, Routes.timeblock_path(conn, :delete, timeblock))
-      assert response(conn, 204)
-
+      assert redirected_to(conn) == Routes.timeblock_path(conn, :index)
       assert_error_sent 404, fn ->
         get(conn, Routes.timeblock_path(conn, :show, timeblock))
       end

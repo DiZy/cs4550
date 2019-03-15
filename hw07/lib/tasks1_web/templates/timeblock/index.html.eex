@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for timeblock <- @timeblocks do %>
+    <tr>
+      <td><%= timeblock.start %></td>
+      <td><%= timeblock.end %></td>
+
+      <td>
+        <%= link "Show", to: Routes.timeblock_path(@conn, :show, timeblock) %>
+        <%= link "Edit", to: Routes.timeblock_path(@conn, :edit, timeblock) %>
+        <%= link "Delete", to: Routes.timeblock_path(@conn, :delete, timeblock), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

@@ -1,12 +1,9 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [id: "task-form"], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
+      <%= @changeset.error %>
     </div>
-  <% end %>
-
-  <%= for usermanaged <- @current_user.usersmanaged do %>
-    <p><%= usermanaged.email %><p>
   <% end %>
   
   <div class="form-group">
@@ -22,12 +19,6 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :minutes, "Minutes Spent" %>
-    <%= number_input f, :minutes, class: "form-control" %>
-    <%= error_tag f, :minutes %>
-  </div>
-
-  <div class="form-group">
     <%= label f, :complete %>
     <%= checkbox f, :complete, class: "form-control" %>
     <%= error_tag f, :complete %>
@@ -35,11 +26,47 @@
 
   <div class="form-group">
     <%= label f, :username, "User to assign (default to self)" %>
-    <%= select f, :username, @emailsAvailable, class: "form-control" %>
+    <%= select f, :username, @emailsAvailable, class: "form-control", selected: @currentEmail %>
     <%= error_tag f, :username %>
   </div>
+
+  <%= if !@isNew do %>
+    <h6>Time tracking:</h6>
+    <%= if !@changeset.data.currentlyworking do %>
+      <button id="startstop-working">Start working</button>
+    <%= else %>
+      <button id="startstop-working">Stop working</button>
+    <%= end %>
+    <h6>Past timeblocks:</h6>
+    <%= render Tasks1Web.TimeblockView, "index.html", Map.put(assigns, :timeblocks, @changeset.data.timeblocks) %>
+  <%= end %>
+
+  <br />
   
   <div>
     <%= submit "Save" %>
   </div>
+
+  <script>
+  window.addEventListener("load", function() {
+    if($("#task-form").length != 0) {
+      $('#startstop-working').click(function(e) {
+        e.preventDefault();
+        var path = "<%= Routes.timeblock_path(@conn, :create) %>";
+        let data = JSON.stringify({
+          task_id: <%= @changeset.data.id %>
+        });
+        $.ajax(path, {
+          method: "post",
+          dataType: "json",
+          contentType: "application/json; charset=UTF-8",
+          data: data,
+          success: (resp) => {
+            location.reload();
+          },
+        });
+      });
+    }
+  });
+  </script>
 <% end %>
