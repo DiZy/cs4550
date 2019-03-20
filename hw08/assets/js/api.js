@@ -1,12 +1,12 @@
 import store from './store';
 
 class TheServer {
-  fetch_path(path, callback) {
+  fetch_path(path, callback, data = "") {
     $.ajax(path, {
       method: "get",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
-      data: "",
+      data: data,
       success: callback,
     });
   }
@@ -20,6 +20,19 @@ class TheServer {
           data: resp.data,
         });
       }
+    );
+  }
+
+  fetch_tasks(user_id) {
+    this.fetch_path(
+      "/api/tasks",
+      (resp) => {
+        store.dispatch({
+          type: 'TASK_LIST',
+          data: resp.data,
+        });
+      },
+      {user_id: user_id}
     );
   }
 

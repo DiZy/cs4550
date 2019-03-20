@@ -11,8 +11,10 @@
 # and so on) as they will fail if something goes wrong.
 alias Hw08.Repo
 alias Hw08.Users.User
+alias Hw08.Tasks.Task
 
 pwhash = Argon2.hash_pwd_salt("pass1")
 
 Repo.insert!(%User{email: "alice@example.com", admin: true, password_hash: pwhash})
 Repo.insert!(%User{email: "bob@example.com", admin: false, password_hash: pwhash})
+Repo.insert!(%Task{name: "1", desc: "desc", minutes: 15, user_id: 2})

@@ -24,6 +24,7 @@ defmodule Hw08Web.Router do
 
     resources "/auth", SessionController, only: [:create]
     resources "/users", UserController, except: [:new, :edit]
+    resources "/tasks", TaskController, except: [:new, :edit]
   end
 
   # Other scopes may use custom stacks.

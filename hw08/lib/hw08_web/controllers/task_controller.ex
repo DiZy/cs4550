@@ -6,8 +6,8 @@ defmodule Hw08Web.TaskController do
 
   action_fallback Hw08Web.FallbackController
 
-  def index(conn, _params) do
-    tasks = Tasks.list_tasks()
+  def index(conn, %{"user_id" => user_id}) do
+    tasks = Tasks.get_tasks_for_user(user_id)
     render(conn, "index.json", tasks: tasks)
   end
 

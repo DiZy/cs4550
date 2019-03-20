@@ -20,7 +20,7 @@ import _ from "lodash";
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
 
-import root_init from './tasks-app';
+import root_init from './root';
 import store from './store';
 
 var root = document.getElementById('root');
