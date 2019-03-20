@@ -19,6 +19,13 @@ defmodule Hw08Web.Router do
     get "/", PageController, :index
   end
 
+  scope "/api", Hw08Web do
+    pipe_through :api
+
+    resources "/auth", SessionController, only: [:create]
+    resources "/users", UserController, except: [:new, :edit]
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", Hw08Web do
   #   pipe_through :api
