@@ -12,6 +12,7 @@ class TaskEditor extends React.Component {
         this.changeName = this.changeName.bind(this);
         this.changeMinutes = this.changeMinutes.bind(this);
         this.changeComplete = this.changeComplete.bind(this);
+        this.changeUser = this.changeUser.bind(this);
         this.submitEdit = this.submitEdit.bind(this);
         this.submitCreate = this.submitCreate.bind(this);
         this.exitForm = this.exitForm.bind(this);
@@ -45,6 +46,13 @@ class TaskEditor extends React.Component {
         });
     }
 
+    changeUser(e) {
+        this.props.dispatch({
+            type: 'SET_TASK_USER',
+            data: e.target.value,
+        });
+    }
+
     exitForm() {
         this.props.history.push('/');
         this.props.dispatch({
@@ -63,6 +71,8 @@ class TaskEditor extends React.Component {
 
 
     render() {
+        let options = this.props.users.map((user) => 
+            <option value={user.id} key={user.id}>{user.email}</option>);
         return <div>
                 {(!this.props.task_form.isNew && <h1>Edit Task</h1>) || <h1>Create Task</h1>}
                 <h3>Name: </h3>
@@ -92,10 +102,14 @@ class TaskEditor extends React.Component {
                     className='form-control input'
                     checked={this.props.task_form.complete}
                     onChange={this.changeComplete} />
+                
+                <select className='form-control' onChange={this.changeUser} value={this.props.task_form.user_id}>
+                    {options}
+                </select>
                     
 
                 {this.props.task_form.isNew &&
-                    <button className='btn' onClick={this.submitCreate}>Create</button>}
+                    <button className='btn btn-secondary' onClick={this.submitCreate}>Create</button>}
 
                 {!this.props.task_form.isNew &&
                     <button className='btn btn-secondary' onClick={this.submitEdit}>Edit</button>}
@@ -105,4 +119,4 @@ class TaskEditor extends React.Component {
 
 
 TaskEditor = withRouter(TaskEditor);
-export default connect((state) => {return {task_form: state.task_form};})(TaskEditor);
+export default connect((state) => {return {task_form: state.task_form, users: state.users};})(TaskEditor);

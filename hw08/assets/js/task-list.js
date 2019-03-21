@@ -35,6 +35,7 @@ class Task extends React.Component {
     }
 
     loadTaskForm() {
+        api.fetch_users();
         this.props.dispatch({
             type: 'SET_EDIT_TASK',
             data: this.props.task,

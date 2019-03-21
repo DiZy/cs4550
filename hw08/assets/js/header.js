@@ -32,7 +32,9 @@ class Header extends React.Component{
     loadTaskForm() {
       this.props.dispatch({
         type: 'SET_CREATE_TASK',
-        data: null,
+        data: {
+          user_id: this.props.session.user_id
+        },
       });
       api.fetch_users();
     }

@@ -60,6 +60,7 @@ function task_form(state = null, action) {
         name: "",
         desc: "",
         complete: false,
+        user_id: action.data.user_id
       };
     case 'SET_EDIT_TASK':
       return {
@@ -69,6 +70,7 @@ function task_form(state = null, action) {
         name: action.data.name,
         desc: action.data.desc,
         complete: action.data.complete,
+        user_id: action.data.user_id
       };
     case 'SET_TASK_NAME':
       return _.assign({}, state, {
@@ -85,6 +87,10 @@ function task_form(state = null, action) {
     case 'SET_TASK_COMPLETE':
       return _.assign({}, state, {
         complete: action.data
+      });
+    case 'SET_TASK_USER':
+      return _.assign({}, state, {
+        user_id: action.data
       });
     case 'CLEAR_TASK_FORM':
       return null;

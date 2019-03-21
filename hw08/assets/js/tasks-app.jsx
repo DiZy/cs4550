@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import api from './api';
-import UserList from './users';
 import Header from './header';
 import TaskList from './task-list';
 import TaskEditor from './task-editor';

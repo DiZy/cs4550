@@ -47,7 +47,7 @@ class TheServer {
           desc: state.task_form.desc,
           minutes: state.task_form.minutes,
           complete: state.task_form.complete,
-          user_id: state.session.user_id,
+          user_id: state.task_form.user_id,
         },
       },
       callback
@@ -65,7 +65,7 @@ class TheServer {
           desc: state.task_form.desc,
           minutes: state.task_form.minutes,
           complete: state.task_form.complete,
-          user_id: state.session.user_id,
+          user_id: state.task_form.user_id
         },
       },
       callback,
