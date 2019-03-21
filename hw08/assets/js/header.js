@@ -38,25 +38,30 @@ class Header extends React.Component{
     }
   
     render(){
-      return <div className="row my-2">
+      return <div className="row">
         <div className="col-4">
           <h1><Link to={"/"} onClick={() => api.fetch_tasks()}>Tasks</Link></h1>
         </div>
-        <div className="col-4">
-          <h1><Link to={"/taskform"} onClick={this.loadTaskForm}>Create</Link></h1>
+        <div className="col-2">
+          <h3><Link to={"/taskform"} onClick={this.loadTaskForm}>Create Task</Link></h3>
         </div>
         {!this.props.session && 
-        <div className="col-6">
-          <div className="form-inline my-2">
-            <input type="email" placeholder="email" value={this.state.email} onChange={this.changeEmail}/>
-            <input type="password" placeholder="password" value={this.state.password} onChange={this.changePassword}/>
-            <button className="btn btn-secondary"
+          <div className="col-6">
+            <div className="form-inline">
+              <input type="email" placeholder="email" value={this.state.email} onChange={this.changeEmail}/>
+              <input type="password" placeholder="password" value={this.state.password} onChange={this.changePassword}/>
+              <button className="btn btn-secondary"
+                onClick={() => {
+                  api.create_session(this.state.email, this.state.password);
+                }}>Login</button>
+            </div>
+          </div>}
+        {this.props.session &&
+           <button 
+              className="btn btn-secondary"
               onClick={() => {
-                api.create_session(this.state.email, this.state.password);
-              }}>Login</button>
-          </div>
-        </div>}
-        {this.props.session && <button className="btn btn-secondary">Logout</button>}
+                api.logout();
+              }}>Logout</button>}
       </div>;
      }
     }

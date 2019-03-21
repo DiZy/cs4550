@@ -92,6 +92,22 @@ class TheServer {
       }
     );
   }
+
+  logout() {
+    let state = store.getState();
+    let user_id = state.session.user_id
+    this.send_post(
+      "/api/auth/" + user_id,
+      {id: user_id},
+      (resp) => {
+        store.dispatch({
+          type: 'DELETE_SESSION',
+          data: resp.data,
+        });
+      },
+      "delete"
+    )
+  }
 }
 
 export default new TheServer();

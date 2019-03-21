@@ -34,6 +34,8 @@ function session(state = null, action) {
   switch (action.type) {
     case 'NEW_SESSION':
       return action.data;
+    case 'DELETE_SESSION':
+      return null;
     default:
       return state;
   }
@@ -99,5 +101,12 @@ function root_reducer(state0, action) {
   return deepFreeze(state1);
 }
 
-let store = createStore(root_reducer);
+let initSession = null;
+if(window.userId && window.userToken) {
+  initSession = {
+    token: window.userToken,
+    user_id: window.userId,
+  };
+}
+let store = createStore(root_reducer, {session: initSession});
 export default store;
