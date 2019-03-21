@@ -94,7 +94,9 @@ class TaskEditor extends React.Component {
                     type='number' 
                     className='form-control input'
                     value={this.props.task_form.minutes}
-                    onChange={this.changeMinutes} />
+                    onKeyDown={(e) => e.preventDefault()}
+                    onChange={this.changeMinutes}
+                    step={15} />
                 
                 <h3>Complete: </h3>
                 <input 

@@ -8,8 +8,8 @@ class Header extends React.Component{
     constructor(props) {
       super(props);
       this.state = {
-        email: "bob@example.com",
-        password: "pass1",
+        email: "",
+        password: "",
       }
   
       this.changeEmail = this.changeEmail.bind(this);

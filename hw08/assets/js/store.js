@@ -56,7 +56,7 @@ function task_form(state = null, action) {
       return {
         isNew: true,
         id: null,
-        minutes: "",
+        minutes: 0,
         name: "",
         desc: "",
         complete: false,
