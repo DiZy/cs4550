@@ -36,9 +36,43 @@ class TheServer {
     );
   }
 
-  send_post(path, data, callback) {
+  submitCreateTask(callback) {
+    var state = store.getState();
+    this.send_post(
+      "/api/tasks",
+      {
+        task: {
+          name: state.task_form.name,
+          desc: state.task_form.desc,
+          minutes: state.task_form.minutes,
+          user_id: state.session.user_id,
+        },
+      },
+      callback
+    );
+  }
+
+  submitEditTask(callback) {
+    var state = store.getState();
+    this.send_post(
+      "/api/tasks/" + state.task_form.id,
+      {
+        id: state.task_form.id,
+        task: {
+          name: state.task_form.name,
+          desc: state.task_form.desc,
+          minutes: state.task_form.minutes,
+          user_id: state.session.user_id,
+        },
+      },
+      callback,
+      "put"
+    );
+  }
+
+  send_post(path, data, callback, method = "post") {
     $.ajax(path, {
-      method: "post",
+      method: method,
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
       data: JSON.stringify(data),

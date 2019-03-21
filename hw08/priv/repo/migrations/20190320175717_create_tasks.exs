@@ -3,10 +3,10 @@ defmodule Hw08.Repo.Migrations.CreateTasks do
 
   def change do
     create table(:tasks) do
-      add :name, :string
-      add :desc, :string
-      add :minutes, :integer
-      add :user_id, references(:users, on_delete: :nothing)
+      add :name, :string, null: false
+      add :desc, :string, null: false
+      add :minutes, :integer, null: false
+      add :user_id, references(:users, on_delete: :delete_all), null: false
 
       timestamps()
     end

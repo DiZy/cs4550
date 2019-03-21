@@ -29,10 +29,15 @@ class TaskList extends React.Component {
 
 class Task extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.loadTaskForm = this.loadTaskForm.bind(this);
+    }
+
     loadTaskForm() {
         this.props.dispatch({
             type: 'SET_EDIT_TASK',
-            data: task,
+            data: this.props.task,
         });
     }
 

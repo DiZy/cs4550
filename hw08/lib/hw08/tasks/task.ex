@@ -6,7 +6,7 @@ defmodule Hw08.Tasks.Task do
     field :desc, :string
     field :minutes, :integer
     field :name, :string
-    field :user_id, :id
+    belongs_to :user, Hw08.Users.User
 
     timestamps()
   end
@@ -14,7 +14,8 @@ defmodule Hw08.Tasks.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:name, :desc, :minutes])
+    |> cast(attrs, [:name, :desc, :minutes, :user_id])
+    |> cast_assoc(:user)
     |> validate_required([:name, :desc, :minutes])
   end
 end

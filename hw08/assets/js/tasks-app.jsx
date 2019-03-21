@@ -21,12 +21,7 @@ class TasksApp extends React.Component {
                     {this.props.session && 
                         <div className="row">
                             <div className="col-8">
-                                <Route path="/" exact={true} render={() =>
-                                    <TaskList />
-                                } />
-                                <Route path="/users" exact={true} render={() =>
-                                    <UserList />
-                                } />
+                                <Route path="/" exact={true} component={TaskList} />
                                 <Route path="/taskform" exact={true} render={() =>
                                     <TaskEditor />
                                 } />

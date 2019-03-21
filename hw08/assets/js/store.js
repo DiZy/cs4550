@@ -1,5 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import deepFreeze from 'deep-freeze';
+import _ from 'lodash'; 
 
 /*
   Application state layout
@@ -52,7 +53,7 @@ function task_form(state = null, action) {
     case 'SET_CREATE_TASK':
       return {
         isNew: true,
-        task_id: null,
+        id: null,
         minutes: "",
         name: "",
         desc: "",
@@ -60,13 +61,26 @@ function task_form(state = null, action) {
       };
     case 'SET_EDIT_TASK':
       return {
-        isNew: true,
-        task_id: action.data.id,
+        isNew: false,
+        id: action.data.id,
         minutes: action.data.minutes,
         name: action.data.name,
         desc: action.data.desc,
         complete: action.data.complete,
       };
+    case 'SET_TASK_NAME':
+      return _.assign({}, state, {
+        name: action.data
+      });
+    case 'SET_TASK_MINUTES':
+      return _.assign({}, state, {
+        minutes: action.data
+      });
+    case 'SET_TASK_DESC':
+      console.log(action.data);
+      return _.assign({}, state, {
+        desc: action.data
+      });
     case 'CLEAR_TASK_FORM':
       return null;
     default:

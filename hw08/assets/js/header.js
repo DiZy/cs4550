@@ -8,8 +8,8 @@ class Header extends React.Component{
     constructor(props) {
       super(props);
       this.state = {
-        email: "",
-        password: "",
+        email: "bob@example.com",
+        password: "pass1",
       }
   
       this.changeEmail = this.changeEmail.bind(this);
@@ -34,15 +34,13 @@ class Header extends React.Component{
         type: 'SET_CREATE_TASK',
         data: null,
       });
+      api.fetch_users();
     }
   
     render(){
       return <div className="row my-2">
         <div className="col-4">
           <h1><Link to={"/"} onClick={() => api.fetch_tasks()}>Tasks</Link></h1>
-        </div>
-        <div className="col-4">
-          <h1><Link to={"/users"} onClick={() => api.fetch_users()}>Users</Link></h1>
         </div>
         <div className="col-4">
           <h1><Link to={"/taskform"} onClick={this.loadTaskForm}>Create</Link></h1>
