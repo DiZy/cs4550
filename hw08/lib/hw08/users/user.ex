@@ -15,5 +15,6 @@ defmodule Hw08.Users.User do
     user
     |> cast(attrs, [:email, :password_hash, :admin])
     |> validate_required([:email, :password_hash, :admin])
+    |> unique_constraint(:email)
   end
 end

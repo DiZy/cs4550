@@ -3,12 +3,13 @@ defmodule Hw08.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :email, :string
-      add :password_hash, :string
+      add :email, :string, null: false
+      add :password_hash, :string, null: false
       add :admin, :boolean, default: false, null: false
 
       timestamps()
     end
 
+    create index(:users, [:email], unique: true)
   end
 end

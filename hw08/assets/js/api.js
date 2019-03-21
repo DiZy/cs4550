@@ -93,6 +93,24 @@ class TheServer {
     );
   }
 
+  register(email, password) {
+    this.send_post(
+      "/api/users",
+      {
+        user: {
+          email: email,
+          password: password,
+        }
+      },
+      (resp) => {
+        store.dispatch({
+          type: 'NEW_SESSION',
+          data: resp.data,
+        });
+      }
+    );
+  }
+
   logout() {
     let state = store.getState();
     let user_id = state.session.user_id
