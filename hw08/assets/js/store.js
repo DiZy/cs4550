@@ -79,9 +79,12 @@ function task_form(state = null, action) {
         minutes: action.data
       });
     case 'SET_TASK_DESC':
-      console.log(action.data);
       return _.assign({}, state, {
         desc: action.data
+      });
+    case 'SET_TASK_COMPLETE':
+      return _.assign({}, state, {
+        complete: action.data
       });
     case 'CLEAR_TASK_FORM':
       return null;

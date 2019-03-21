@@ -23,7 +23,8 @@ class TheServer {
     );
   }
 
-  fetch_tasks(user_id) {
+  fetch_tasks() {
+    let state = store.getState();
     this.fetch_path(
       "/api/tasks",
       (resp) => {
@@ -32,7 +33,7 @@ class TheServer {
           data: resp.data,
         });
       },
-      {user_id: user_id}
+      {user_id: state.session.user_id}
     );
   }
 
@@ -45,6 +46,7 @@ class TheServer {
           name: state.task_form.name,
           desc: state.task_form.desc,
           minutes: state.task_form.minutes,
+          complete: state.task_form.complete,
           user_id: state.session.user_id,
         },
       },
@@ -62,6 +64,7 @@ class TheServer {
           name: state.task_form.name,
           desc: state.task_form.desc,
           minutes: state.task_form.minutes,
+          complete: state.task_form.complete,
           user_id: state.session.user_id,
         },
       },

@@ -7,7 +7,7 @@ import api from './api';
 class TaskList extends React.Component {
     constructor(props) {
         super(props);
-        api.fetch_tasks(props.session.user_id);
+        api.fetch_tasks();
     }
 
     render() {
@@ -46,6 +46,7 @@ class Task extends React.Component {
                 <td>{this.props.task.name}</td>
                 <td>{this.props.task.desc}</td>
                 <td>{this.props.task.minutes}</td>
+                <td>{(this.props.task.complete && "Complete") || "Incomplete"}</td>
                 <td><Link to={"/taskform"} onClick={this.loadTaskForm}>Edit</Link> </td>
             </tr>;
     }

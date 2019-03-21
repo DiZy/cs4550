@@ -11,6 +11,7 @@ class TaskEditor extends React.Component {
         this.changeDesc = this.changeDesc.bind(this);
         this.changeName = this.changeName.bind(this);
         this.changeMinutes = this.changeMinutes.bind(this);
+        this.changeComplete = this.changeComplete.bind(this);
         this.submitEdit = this.submitEdit.bind(this);
         this.submitCreate = this.submitCreate.bind(this);
         this.exitForm = this.exitForm.bind(this);
@@ -34,6 +35,13 @@ class TaskEditor extends React.Component {
         this.props.dispatch({
             type: 'SET_TASK_MINUTES',
             data: e.target.value,
+        });
+    }
+
+    changeComplete(e) {
+        this.props.dispatch({
+            type: 'SET_TASK_COMPLETE',
+            data: e.target.checked,
         });
     }
 
@@ -77,6 +85,14 @@ class TaskEditor extends React.Component {
                     className='form-control input'
                     value={this.props.task_form.minutes}
                     onChange={this.changeMinutes} />
+                
+                <h3>Complete: </h3>
+                <input 
+                    type='checkbox' 
+                    className='form-control input'
+                    checked={this.props.task_form.complete}
+                    onChange={this.changeComplete} />
+                    
 
                 {this.props.task_form.isNew &&
                     <button className='btn' onClick={this.submitCreate}>Create</button>}
