@@ -100,12 +100,9 @@ function task_form(state = null, action) {
 }
 
 function root_reducer(state0, action) {
-  console.log("reducer", state0, action);
 
   let reducer = combineReducers({users, session, tasks, task_form});
   let state1 = reducer(state0, action);
-
-  console.log("reducer1", state1);
 
   return deepFreeze(state1);
 }
