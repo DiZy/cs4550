@@ -41,8 +41,8 @@ class Starter extends Component {
     this.channel = props.channel;
     this.channel.on("update", this.updateView.bind(this))
     this.channel.join()
-      .receive("ok", resp => {console.log(resp); this.setState(resp.game);})
-      .receive("error", resp => { console.log("Unable to join", resp); });
+      .receive("ok", resp => {this.setState(resp.game);})
+      .receive("error", resp => { console.warn("Unable to join", resp); });
   }
 
   componentDidUpdate() {
@@ -141,7 +141,6 @@ class Starter extends Component {
   }
 
   renderGrid = () => {
-    console.log(this.state);
     const { x, y , ship1, ship2, isShipVertical, gameReady} = this.state;
 
     return [...Array(GRID_SIZE).keys()].map(yCoord => {
@@ -152,7 +151,6 @@ class Starter extends Component {
         const ship2Index = ship2.findIndex(entry => entry.x == xCoord && entry.y == yCoord);
 
         const hasShip = ship1Index != -1 || ship2Index != -1;
-        console.log(hasShip);
         var hit = false;
 
         if (hasShip && (
@@ -171,7 +169,7 @@ class Starter extends Component {
           }
         }
 
-        return <Tile hit={hit} hasShip={hasShip} highlight={highlight}>x<sub>{xCoord}</sub> y<sub>{yCoord}</sub></Tile>;
+        return <Tile key={xCoord * 10 + yCoord} hit={hit} hasShip={hasShip} highlight={highlight}>x<sub>{xCoord}</sub> y<sub>{yCoord}</sub></Tile>;
       });
       return row.concat([<br />]);
     });
@@ -185,7 +183,7 @@ class Starter extends Component {
         let hit = hitsOnOtherPlayer.find(entry => entry.x == xCoord && entry.y == yCoord)
         let highlight = gameReady && xCoord == x && yCoord == y;
 
-        return <Tile hit={hit} highlight={highlight}>x<sub>{xCoord}</sub> y<sub>{yCoord}</sub></Tile>;
+        return <Tile key={xCoord * 10 + yCoord} hit={hit} highlight={highlight}>x<sub>{xCoord}</sub> y<sub>{yCoord}</sub></Tile>;
       });
       return row.concat([<br />]);
     });
